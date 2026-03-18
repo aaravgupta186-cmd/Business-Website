@@ -456,7 +456,7 @@ const postsRef = collection(db,'forumPosts');
 const postsQuery = query(postsRef, orderBy('timestamp','desc'), limit(100));
 onSnapshot(postsQuery, async snap => {
   const posts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-  await enforceMaxPosts();
+  // await enforceMaxPosts();
   const latest12 = posts.slice(0,12);
   renderGrid(latest12);
 });

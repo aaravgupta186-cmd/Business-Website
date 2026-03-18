@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Home</title>
+
+<style>
+:root{--nav-h:72px;--gap:28px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{
+  scroll-behavior:smooth;
+}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f0f4f7;
+  color:#111;
+}
+
+/* NAV */
+nav{
+  background:#b7d7f4;
+  padding:12px 28px;
+  height:var(--nav-h);
+  display:flex;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+.nav-grid{
+  display:flex;
+  align-items:center;
+  width:100%;
+  justify-content:space-between;
+}
+
+.nav-left-group{
+  display:flex;
+  align-items:center;
+  gap:36px;
+}
+
+.nav-right-group{
+  display:flex;
+  align-items:center;
+}
+
+.logo img{
+  width:56px;
+}
+.logo-right{
+  margin-left:20px;
+}
+
+/* links */
+.nav-grid a{
+  color:#000;
+  text-decoration:none;
+  font-size:18px;
+  padding:6px 8px;
+}
+.nav-grid .active{font-weight:700;text-decoration:underline}
+.nav-grid a:hover{background:#dcecff;border-radius:6px}
+
+/* === DROPDOWN FIX === */
+.dropdown{
+  position:relative;
+}
+
+/* make the clickable parent inline-block so its box matches the text */
+.dropdown > a{
+  display:inline-block;
+}
+
+/* show menu when hovering anywhere over the dropdown area */
+.dropdown-content{
+  display:none;
+  position:absolute;
+  top:100%;          /* directly under the parent link, no gap */
+  left:0;
+  background:#fff;
+  border-radius:6px;
+  min-width:220px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.12);
+  z-index:999;
+}
+
+/* IMPORTANT: stay visible while pointer is on parent OR content */
+.dropdown:hover .dropdown-content{
+  display:block;
+}
+
+.dropdown-content a{
+  display:block;
+  padding:10px 14px;
+  color:#000;
+  white-space:nowrap;
+}
+.dropdown-content a:hover{
+  background:#f0f4ff;
+}
+
+/* search */
+.search-box{
+  display:flex;
+  justify-content:center;
+}
+.search-box input{
+  padding:8px 12px;
+  border-radius:6px;
+  border:1px solid #9bbde6;
+  font-size:15px;
+  width:160px;
+}
+.go-btn{
+  margin-left:10px;
+  padding:8px 14px;
+  border-radius:6px;
+  border:0;
+  background:#34a853;
+  color:#fff;
+  cursor:pointer;
+  font-size:15px;
+}
+
+/* banner */
+.banner{
+  margin:var(--gap) 28px 24px;
+  border-radius:6px;
+  background:#cfcfcf;
+  height:320px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  color:#333;
+}
+
+/* content */
+.content-row{
+  display:grid;
+  grid-template-columns:1fr 360px;
+  gap:32px;
+  padding:0 28px 32px;
+}
+.purpose{
+  background:#fff9c4;
+  padding:36px;
+  border-radius:8px;
+  font-size:18px;
+  line-height:1.6;
+}
+.side-image{
+  background:#d6d6d6;
+  border-radius:8px;
+  height:320px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#444;
+  font-size:18px;
+}
+
+/* to-top button */
+.toTop{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:50px;
+  height:50px;
+  background-color:#ff6b6b;
+  color:white;
+  border-radius:50%;
+  font-size:22px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 4px 6px rgba(0,0,0,0.3);
+  transition:background-color 0.3s;
+  text-decoration:none;
+  z-index:2000;
+}
+.toTop:hover{
+  background-color:#ff4b4b;
+}
+</style>
+</head>
+
+<body>
+
+<div id="top"></div>
+
+<nav>
+  <div class="nav-grid">
+
+    <div class="nav-left-group">
+      <div class="logo"> <img src="../Downloads/Screenshot_2026-02-18_at_10.02.38_AM-removebg-preview.png" width="44" height="42" alt=""/></div>
+
+      <div>
+        <a href="Homepage.html" class="active">Home Page</a>
+      </div>
+
+      <div class="dropdown">
+        <a href="business_aspects.html">Business Aspects ▾</a>
+        <div class="dropdown-content">
+          <a href="Financial Literacy.html">Financial Literacy</a>
+          <a href="Marketing Strategies.html">Marketing Strategies</a>
+          <a href="Business Planning.html">Business Planning</a>
+        </div>
+      </div>
+
+      <div>
+        <a href="Forum.html">Forum</a>
+      </div>
+
+      <div>
+        <a href="Uploads.html">Forum Uploads</a>
+      </div>
+    </div>
+
+    <div class="nav-right-group">
+      <div class="search-box">
+        <form id="searchForm" style="display:flex;align-items:center;">
+          <input type="text" id="searchInput" placeholder="Search...">
+          <button type="submit" class="go-btn">Go</button>
+        </form>
+      </div>
+
+      <div class="logo logo-right"> </div>
+    <span class="logo"><img src="../Downloads/Screenshot_2026-02-18_at_10.02.38_AM-removebg-preview.png" width="44" height="42" alt=""/></span>    </div>
+
+  </div>
+</nav>
+
+<div class="banner"><img src="Screenshot 2026-02-18 at 9.56.14 AM.png" width="1450" height="300" alt=""/></div>
+
+<div class="content-row">
+  <section class="purpose">
+    <h2 style="font-size:28px;margin-bottom:12px">Purpose</h2>
+    <p>
+      This platform teaches practical business skills in financial literacy, marketing strategies, and business planning. All explanations are simple, clear, and designed for students who want to quickly understand real-world business concepts.
+    </p>
+    <p style="margin-top:12px">
+      The site also contains an interactive Forum where users can share ideas, upload posts, and receive feedback. All content is structured so users can learn fast and apply what they learn to real projects.
+    </p>
+  </section>
+
+  <aside class="side-image"><img src="Screenshot 2026-02-18 at 9.58.08 AM.png" width="325" height="300" alt=""/></aside>
+</div>
+
+<a href="#top" class="toTop">↑</a>
+	
+<script>
+document.getElementById('searchForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const searchInput = document.getElementById('searchInput').value.toLowerCase().trim();
+
+  // Mapping keywords to pages
+  const searchMap = {
+    'forum': 'Forum.html',
+    'upload': 'Uploads.html',
+    'finance': 'Financial Literacy.html',
+	'literacy': 'Financial Literacy.html',
+    'marketing': 'Marketing Strategies.html',
+    'business': 'Business Planning.html',
+	'planning': 'Business Planning.html',
+    'home': 'Homepage.html',
+	'strategies': 'Marketing Strategies.html',
+	'budgeting': 'Financial Literacy.html',
+	'mindset': 'Financial Literacy.html',
+	'Managing Money': 'Financial Literacy.html',
+	'social media': 'Marketing Strategies.html',
+	'content creation': 'Marketing Strategies.html',
+	'market research': 'Marketing Strategies.html',
+	'costing': 'Business Planning.html',
+	'pricing': 'Business Planning.html',
+	'management': 'Business Planning.html',
+	'title': 'Forum.html',
+	'description': 'Forum.html',
+  };
+
+  if (searchMap[searchInput]) {
+    window.location.href = './' + searchMap[searchInput];
+  } else {
+    alert('Sorry, that page was not found.');
+  }
+});
+</script>
+
+</body>
+</html>

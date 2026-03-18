@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Forum Uploads</title>
+<style>
+/* theme + nav (matches Forum page) */
+body{font-family:Arial,Helvetica,sans-serif;background:#f3f6fa;margin:0;color:#111}
+nav{background:#b7d7f4;height:72px;display:flex;align-items:center;padding:0 25px;position:sticky;top:0;z-index:1000}
+.nav-grid{display:flex;width:100%;justify-content:space-between;align-items:center}
+.nav-left-group{display:flex;align-items:center;gap:35px}
+.nav-right-group{display:flex;align-items:center}
+nav a{color:#000;text-decoration:none;font-size:18px;padding:6px 8px}
+nav a:hover{background:#dcecff;border-radius:6px}
+.active{font-weight:700;text-decoration:underline}
+
+/* page header */
+.page-title{text-align:center;font-size:28px;font-weight:700;margin:18px 0}
+
+/* top images placeholders */
+.top-images{width:88%;margin:0 auto 10px;display:flex;gap:20px;justify-content:space-between}
+.img-placeholder{background:#d7d7d7;height:120px;width:48%;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#555}
+
+/* grid of 12 boxes */
+.uploads-grid{width:88%;margin:18px auto 30px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.upload-box{background:#fff7a6;padding:16px;border-radius:8px;min-height:220px;display:flex;flex-direction:column;justify-content:flex-start;box-sizing:border-box}
+.upload-title{font-weight:700;margin-bottom:8px}
+.upload-excerpt{color:#222;flex:1;margin-bottom:12px;overflow:hidden;text-overflow:ellipsis;max-height:8.4em}
+.box-controls{display:flex;justify-content:space-between;align-items:center}
+.view-btn{padding:8px 12px;background:#2f78d2;color:#fff;border:0;border-radius:6px;cursor:pointer}
+
+/* bottom Back button */
+.back-row{width:88%;margin:22px auto 60px;display:flex;justify-content:center}
+.back-btn{padding:12px 34px;border-radius:6px;background:#a83c32;color:white;border:0;font-weight:bold;cursor:pointer}
+
+/* modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:2000}
+.modal{width:92%;max-width:920px;background:#fff;border-radius:8px;padding:18px;max-height:86vh;overflow:auto;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.modal .title{font-size:22px;font-weight:700;margin-bottom:10px}
+.modal .image{background:#e6e6e6;height:160px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#555;margin-bottom:12px}
+.modal .content{white-space:pre-wrap;margin-bottom:8px}
+.comments{margin-top:12px}
+.comment{background:#f7f7f7;padding:10px;border-radius:6px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
+.comment-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.comment-text{flex:1;white-space:pre-wrap}
+.comment-controls{display:flex;gap:8px;align-items:center}
+.comment-controls button{padding:6px 8px;border-radius:6px;border:0;background:#e9eef9;cursor:pointer}
+
+/* comment input */
+.comment-input{display:flex;gap:8px;margin-top:10px}
+.comment-input input{flex:1;padding:8px 10px;border-radius:6px;border:1px solid #ccc}
+.comment-input button{padding:8px 12px;border-radius:6px;border:0;background:#2f78d2;color:#fff;cursor:pointer}
+
+/* to-top */
+#toTop{position:fixed;bottom:20px;right:20px;background:#ff7a7a;color:white;padding:10px 14px;border-radius:50%;border:0;cursor:pointer;display:none;z-index:1500;font-size:18px}
+
+/* responsive */
+@media (max-width:1000px){.uploads-grid{grid-template-columns:repeat(2,1fr)}.top-images{flex-direction:column}}
+@media (max-width:520px){.uploads-grid{grid-template-columns:1fr}}
+.search-box input{padding:6px 10px;border-radius:6px;border:1px solid #9bbde6}
+.go-btn{margin-left:8px;padding:6px 10px;border-radius:6px;border:0;background:#34a853;color:#fff}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-grid">
+    <div class="nav-left-group">
+      <img src="../Downloads/Screenshot_2026-02-18_at_10.02.38_AM-removebg-preview.png" width="44" height="42" alt=""/>
+      <a href="Homepage.html">Home Page</a>
+
+      <div class="dropdown" style="position:relative">
+        <a href="#">Business Aspects ▾</a>
+        <div class="dropdown-content" style="display:none;position:absolute;top:28px;left:0;background:#fff;border:1px solid #ccc;min-width:190px;z-index:999">
+          <a href="Financial Literacy.html" style="display:block;padding:8px">Financial Literacy</a>
+          <a href="Marketing Strategies.html" style="display:block;padding:8px">Marketing Strategies</a>
+          <a href="Business Planning.html" style="display:block;padding:8px">Business Planning</a>
+        </div>
+      </div>
+
+      <a href="Forum.html">Forum</a>
+      <a href="Uploads.html" class="active">Forum Uploads</a>
+    </div>
+
+    <div class="nav-right-group">
+      <div class="search-box">
+        <input id="searchInput" type="text" placeholder="Search...">
+      </div>
+      <button class="go-btn" id="searchBtn">Go</button>
+      <img src="../Downloads/Screenshot_2026-02-18_at_10.02.38_AM-removebg-preview.png" width="44" height="42" alt=""/>
+    </div>
+  </div>
+</nav>
+
+<div class="page-title">Forum Uploads</div>
+
+<div class="top-images">
+  <div class="img-placeholder"><img src="Screenshot 2026-02-18 at 10.11.04 AM.png" width="450" height="100" alt=""/></div>
+  <div class="img-placeholder"><img src="Screenshot 2026-02-18 at 10.12.15 AM.png" width="450" height="100" alt=""/></div>
+</div>
+
+<div class="uploads-grid" id="uploadsGrid"></div>
+
+<div class="back-row"><button class="back-btn" onclick="location.href='Homepage.html'">Back</button></div>
+
+<div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button id="closeModal" style="float:right;background:#ddd;border:0;padding:6px 10px;border-radius:6px;cursor:pointer">Close</button>
+    <div class="title" id="modalTitle"></div>
+    <div class="image" id="modalImage">Image Placeholder</div>
+    <div class="content" id="modalContent"></div>
+
+    <div class="comments">
+      <h4>Comments</h4>
+      <div id="commentsList"></div>
+
+      <div class="comment-input">
+        <input id="commentInput" placeholder="Write a comment...">
+        <button id="addCommentBtn">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOP BUTTON -->
+<button id="toTop" title="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- Firebase + main logic -->
+<script type="module">
+/* ================== IMPORTS ================== */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import {
+  getFirestore, collection, addDoc, serverTimestamp,
+  query, orderBy, limit, onSnapshot, getDocs, doc, deleteDoc,
+  runTransaction, getDoc, setDoc
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+/* ================ FIREBASE CONFIG ============== */
+/* Use your config - I've used the one you've provided earlier */
+const firebaseConfig = {
+  apiKey: "AIzaSyD-2tQiN2SMMAG3k8jccQwODKvROoXR4Vs",
+  authDomain: "business-17883.firebaseapp.com",
+  projectId: "business-17883",
+  storageBucket: "business-17883.firebasestorage.app",
+  messagingSenderId: "264809038260",
+  appId: "1:264809038260:web:d35a954c423a76a899b2e1",
+  measurementId: "G-93CEWZGEBP"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* ================ USER UID (NO AUTH) ================= */
+let CURRENT_UID = localStorage.getItem("forum_uid");
+if (!CURRENT_UID) {
+  CURRENT_UID = "uid_" + Math.random().toString(36).slice(2) + Date.now();
+  localStorage.setItem("forum_uid", CURRENT_UID);
+}
+
+/* ================ BAD WORD FILTER ================ */
+const bannedRoots = [
+  "fuck","fuk","shit","bitch","asshole",
+  "slut","whore","dick","cunt","retard","bastard",
+  "moron","loser","pussy","hoe","ass", "fuckard", "dickhead",
+	"motherfucker", "fucker", "dumbass", "bitchass", "bloody"
+];
+
+function containsBadWords(text) {
+  if(!text) return false;
+  const t = String(text).toLowerCase();
+  const cleaned = t.normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "")
+    .replace(/\s+/g, "");
+  return bannedRoots.some(root => {
+    const pattern = root.split("").map(ch => `${ch}+`).join("[^a-z0-9]*");
+    const regex = new RegExp(pattern, "i");
+    return regex.test(t) || regex.test(cleaned);
+  });
+}
+
+/* ================ SEARCH (simple map) ================ */
+const searchBtn = document.getElementById('searchBtn');
+const searchInput = document.getElementById('searchInput');
+const searchMap = {
+  'forum': 'Forum.html',
+  'upload': 'Uploads.html',
+  'uploads': 'Uploads.html',
+  'finance': 'Financial Literacy.html',
+  'literacy': 'Financial Literacy.html',
+  'marketing': 'Marketing Strategies.html',
+  'business planning': 'Business Planning.html',
+  'home': 'Homepage.html'
+};
+searchBtn.onclick = () => {
+  const keyword = (searchInput.value||'').toLowerCase().trim();
+  if (searchMap[keyword]) window.location.href = searchMap[keyword];
+  else alert('No matching page found.');
+};
+
+/* ================ DOM REFS ================ */
+const uploadsGrid = document.getElementById('uploadsGrid');
+const modalOverlay = document.getElementById('modalOverlay');
+const modalTitle = document.getElementById('modalTitle');
+const modalImage = document.getElementById('modalImage');
+const modalContent = document.getElementById('modalContent');
+const commentsList = document.getElementById('commentsList');
+const commentInput = document.getElementById('commentInput');
+const addCommentBtn = document.getElementById('addCommentBtn');
+const closeModal = document.getElementById('closeModal');
+const toTop = document.getElementById('toTop');
+
+let currentPostId = null;
+let commentsUnsub = null;
+
+/* ================ MAX POSTS ENFORCEMENT ================ */
+async function deleteCommentsAndPost(postId){
+  try {
+    const snap = await getDocs(collection(db,'forumPosts',postId,'comments'));
+    const deletes = [];
+    snap.forEach(cd => deletes.push(deleteDoc(doc(db,'forumPosts',postId,'comments',cd.id))));
+    await Promise.all(deletes);
+  } catch(e){
+    console.warn("comments delete error", e);
+  }
+  await deleteDoc(doc(db,'forumPosts',postId));
+}
+async function enforceMaxPosts(){
+  const qAll = query(collection(db,'forumPosts'), orderBy('timestamp','asc'));
+  const snap = await getDocs(qAll);
+  const docs = snap.docs;
+  const MAX = 12;
+  if (docs.length <= MAX) return;
+  const numToRemove = docs.length - MAX;
+  for (let i=0;i<numToRemove;i++){
+    await deleteCommentsAndPost(docs[i].id);
+  }
+}
+
+/* ================ RENDER GRID (12 boxes) ================ */
+function renderGrid(postsArray){
+  uploadsGrid.innerHTML = '';
+  for (let i=0;i<12;i++){
+    const post = postsArray[i] || null;
+    const box = document.createElement('div');
+    box.className = 'upload-box';
+    if (post){
+      const t = document.createElement('div'); t.className='upload-title'; t.textContent = post.title || 'Untitled';
+      const ex = document.createElement('div'); ex.className='upload-excerpt';
+      ex.textContent = (post.content||'').length > 220 ? (post.content.slice(0,220) + '...') : (post.content || '');
+      const ctr = document.createElement('div'); ctr.className='box-controls';
+      const view = document.createElement('button'); view.className='view-btn'; view.textContent = 'View Full Post';
+      view.onclick = () => openModal(post.id, post);
+      ctr.appendChild(view);
+      box.appendChild(t); box.appendChild(ex); box.appendChild(ctr);
+    } else {
+      const t = document.createElement('div'); t.className='upload-title'; t.textContent = 'Empty';
+      const ex = document.createElement('div'); ex.className='upload-excerpt'; ex.textContent = 'No post yet.';
+      box.appendChild(t); box.appendChild(ex);
+    }
+    uploadsGrid.appendChild(box);
+  }
+}
+
+/* ================ OPEN MODAL + COMMENTS LISTENER ================ */
+function openModal(postId, postData){
+  currentPostId = postId;
+  modalTitle.textContent = postData.title || 'Untitled';
+  modalContent.textContent = postData.content || '';
+  modalImage.textContent = postData.image || 'Image Placeholder';
+
+  // unsubscribe previous comments listener
+  if (commentsUnsub) commentsUnsub();
+
+  const commentsRef = collection(db,'forumPosts',postId,'comments');
+  const commentsQuery = query(commentsRef, orderBy('timestamp','asc'));
+
+  commentsUnsub = onSnapshot(commentsQuery, snap => {
+    commentsList.innerHTML = '';
+    if (snap.empty) {
+      commentsList.innerHTML = '<div style="color:#666">No comments yet.</div>';
+      return;
+    }
+
+    snap.forEach(cmDoc => {
+      const data = cmDoc.data();
+      const commentId = cmDoc.id;
+
+      const commentDiv = document.createElement('div');
+      commentDiv.className = 'comment';
+
+      const textDiv = document.createElement('div');
+      textDiv.className = 'comment-text';
+      textDiv.textContent = data.text || '';
+      commentDiv.appendChild(textDiv);
+
+      // controls (thumbs + counts)
+      const controls = document.createElement('div');
+      controls.className = 'comment-controls';
+
+      const upBtn = document.createElement('button');
+      upBtn.textContent = '👍';
+      upBtn.title = 'Thumbs up';
+
+      const likeSpan = document.createElement('span');
+      likeSpan.textContent = data.likes || 0;
+
+      const downBtn = document.createElement('button');
+      downBtn.textContent = '👎';
+      downBtn.title = 'Thumbs down';
+
+      const dislikeSpan = document.createElement('span');
+      dislikeSpan.textContent = data.dislikes || 0;
+
+      controls.appendChild(upBtn);
+      controls.appendChild(likeSpan);
+      controls.appendChild(downBtn);
+      controls.appendChild(dislikeSpan);
+
+      commentDiv.appendChild(controls);
+      commentsList.appendChild(commentDiv);
+
+      /* ---------- VOTING LOGIC (firebase only) ---------- */
+      // References
+      const commentRef = doc(db, 'forumPosts', postId, 'comments', commentId);
+      const voteRef = doc(db, 'forumPosts', postId, 'comments', commentId, 'votes', CURRENT_UID || 'anon_pending');
+
+      // Helper to check current user's vote (fast read)
+      async function getUserVote() {
+        if (!CURRENT_UID) return null;
+        const snap = await getDoc(doc(db, 'forumPosts', postId, 'comments', commentId, 'votes', CURRENT_UID));
+        return snap.exists() ? snap.data().vote : null;
+      }
+
+      // Upvote click handler
+      upBtn.onclick = async () => {
+        if (!CURRENT_UID) {
+          alert('Signing in. Please try again in a second.');
+          return;
+        }
+        try {
+          const existing = await getUserVote();
+          if (existing === 'up') { alert('You can only vote once.'); return; }
+
+          await runTransaction(db, async (tx) => {
+            const cSnap = await tx.get(commentRef);
+            let likes = (cSnap.exists() && cSnap.data().likes) ? cSnap.data().likes : 0;
+            let dislikes = (cSnap.exists() && cSnap.data().dislikes) ? cSnap.data().dislikes : 0;
+
+            const vSnap = await tx.get(doc(db,'forumPosts',postId,'comments',commentId,'votes',CURRENT_UID));
+            if (vSnap.exists()) {
+              const prev = vSnap.data().vote;
+              if (prev === 'up') {
+                // Shouldn't happen due to pre-check, but guard
+                throw new Error('already-up');
+              }
+              // prev === 'down' -> switch
+              dislikes = Math.max(0, dislikes - 1);
+              likes = likes + 1;
+              tx.update(commentRef, { likes, dislikes });
+              tx.update(vSnap.ref, { vote: 'up', timestamp: serverTimestamp() });
+            } else {
+              // first-time upvote
+              likes = likes + 1;
+              // if comment doc doesn't exist or lacks fields, set with merge
+              if (cSnap.exists()) tx.update(commentRef, { likes });
+              else tx.set(commentRef, { likes, dislikes: dislikes }, { merge: true });
+              tx.set(doc(db,'forumPosts',postId,'comments',commentId,'votes',CURRENT_UID), { vote: 'up', timestamp: serverTimestamp() });
+            }
+          });
+          // success — UI will update via onSnapshot
+        } catch (err) {
+          if (err.message === 'already-up') alert('You can only vote once.');
+          else {
+            console.error('Upvote error', err);
+            alert('Could not register vote. Try again.');
+          }
+        }
+      };
+
+      // Downvote click handler
+      downBtn.onclick = async () => {
+        if (!CURRENT_UID) {
+          alert('Signing in. Please try again in a second.');
+          return;
+        }
+        try {
+          const existing = await getUserVote();
+          if (existing === 'down') { alert('You can only vote once.'); return; }
+
+          await runTransaction(db, async (tx) => {
+            const cSnap = await tx.get(commentRef);
+            let likes = (cSnap.exists() && cSnap.data().likes) ? cSnap.data().likes : 0;
+            let dislikes = (cSnap.exists() && cSnap.data().dislikes) ? cSnap.data().dislikes : 0;
+
+            const vSnap = await tx.get(doc(db,'forumPosts',postId,'comments',commentId,'votes',CURRENT_UID));
+            if (vSnap.exists()) {
+              const prev = vSnap.data().vote;
+              if (prev === 'down') {
+                throw new Error('already-down');
+              }
+              // prev === 'up' -> switch
+              likes = Math.max(0, likes - 1);
+              dislikes = dislikes + 1;
+              tx.update(commentRef, { likes, dislikes });
+              tx.update(vSnap.ref, { vote: 'down', timestamp: serverTimestamp() });
+            } else {
+              // first-time downvote
+              dislikes = dislikes + 1;
+              if (cSnap.exists()) tx.update(commentRef, { dislikes });
+              else tx.set(commentRef, { likes: likes, dislikes }, { merge: true });
+              tx.set(doc(db,'forumPosts',postId,'comments',commentId,'votes',CURRENT_UID), { vote: 'down', timestamp: serverTimestamp() });
+            }
+          });
+        } catch (err) {
+          if (err.message === 'already-down') alert('You can only vote once.');
+          else {
+            console.error('Downvote error', err);
+            alert('Could not register vote. Try again.');
+          }
+        }
+      };
+      /* ---------- end voting logic ---------- */
+    });
+  });
+
+  // show modal
+  modalOverlay.style.display = 'flex';
+}
+
+/* ================ ADD COMMENT (bad word filter) ================ */
+addCommentBtn.addEventListener('click', async () => {
+  const text = (commentInput.value || '').trim();
+  if (!text) return alert('Write a comment first.');
+  if (!currentPostId) return alert('No post selected.');
+  if (containsBadWords(text)) { alert('Your comment contains inappropriate language. Remove bad words before posting.'); return; }
+
+  try {
+    await addDoc(collection(db, 'forumPosts', currentPostId, 'comments'), {
+      text,
+      timestamp: serverTimestamp(),
+      likes: 0,
+      dislikes: 0
+    });
+    commentInput.value = '';
+  } catch (e) {
+    console.error('Comment add error', e);
+    alert('Could not add comment.');
+  }
+});
+
+/* ================ POSTS REAL-TIME LISTENER ================= */
+const postsRef = collection(db,'forumPosts');
+const postsQuery = query(postsRef, orderBy('timestamp','desc'), limit(100));
+onSnapshot(postsQuery, async snap => {
+  const posts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  await enforceMaxPosts();
+  const latest12 = posts.slice(0,12);
+  renderGrid(latest12);
+});
+
+/* ================ MODAL + UI CONTROLS ================= */
+closeModal.addEventListener('click', () => {
+  modalOverlay.style.display = 'none';
+  if (commentsUnsub) { commentsUnsub(); commentsUnsub = null; }
+  currentPostId = null;
+  commentsList.innerHTML = '';
+});
+
+/* to-top button show/hide */
+window.addEventListener('scroll', ()=> {
+  toTop.style.display = (document.documentElement.scrollTop > 200) ? 'block' : 'none';
+});
+
+/* dropdown behaviour */
+document.querySelectorAll('.dropdown').forEach(dd=>{
+  dd.addEventListener('mouseenter', ()=> dd.querySelector('.dropdown-content').style.display='block');
+  dd.addEventListener('mouseleave', ()=> dd.querySelector('.dropdown-content').style.display='none');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Forum</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background:#f3f6fa;
+    margin:0;
+}
+
+/* NAV BAR */
+nav {
+    background: #b7d7f4;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.nav-grid {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items:center;
+}
+.nav-left-group {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+.nav-right-group {
+    display:flex;
+    align-items:center;
+}
+nav a {
+    color: black;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 6px 8px;
+}
+nav a:hover {
+    background:#dcecff;
+    border-radius:6px;
+}
+.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Dropdown */
+.dropdown { position: relative; }
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background: white;
+    min-width: 180px;
+    top: 28px;
+    border: 1px solid #ccc;
+    z-index: 999;
+}
+.dropdown-content a {
+    display: block;
+    padding: 8px;
+    font-size: 16px;
+}
+.dropdown-content a:hover { background:#dcecff; }
+.dropdown:hover .dropdown-content { display:block; }
+
+/* Search */
+.search-box input {
+    padding:6px 10px;
+    border-radius:6px;
+    border:1px solid #9bbde6;
+}
+.go-btn {
+    margin-left:8px;
+    padding:7px 15px;
+    border-radius:6px;
+    border:none;
+    background:#34a853;
+    color:white;
+}
+
+/* Page title + text */
+.page-title {
+    font-size:32px;
+    font-weight:bold;
+    text-align:center;
+    margin-top:25px;
+}
+.page-desc {
+    width:88%;
+    margin: 10px auto;
+    text-align:center;
+    font-size:16px;
+}
+
+/* Forum layout */
+.forum-container {
+    width:88%;
+    margin:25px auto;
+    display:flex;
+    gap:30px;
+}
+
+/* FIXED SOFT YELLOW BOX */
+.box-soft-yellow {
+    background:#fff7a6;
+    padding:22px;
+    border-radius:10px;
+    width:100%;
+    box-sizing:border-box;
+}
+
+.box-soft-yellow input,
+.box-soft-yellow textarea {
+    width:100%;
+    box-sizing:border-box;
+    border:0;
+    padding:12px;
+    border-radius:8px;
+    background:white;
+    font-size:16px;
+}
+
+.box-soft-yellow textarea { height:220px; resize:none; }
+
+/* GREY BOX */
+.grey-box {
+    width:40%;
+    background:#d7d7d7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:10px;
+    font-size:20px;
+}
+
+/* Buttons */
+.bottom-buttons {
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    margin:40px 0;
+}
+.btn {
+    padding:12px 38px;
+    border-radius:6px;
+    border:none;
+    cursor:pointer;
+    font-size:18px;
+}
+.publish-btn { background:#d32f2f; color:white; }
+.back-btn { background:#a83c32; color:white; }
+
+/* To top */
+#toTop {
+    position:fixed;
+    bottom:30px;
+    right:30px;
+    background:#ff7a7a;
+    color:white;
+    padding:12px 16px;
+    border-radius:6px;
+    cursor:pointer;
+    display:none;
+    border:none;
+}
+.nav-left-group1 {    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="nav-grid">
+        <div class="nav-left-group">
+            <img src="../Downloads/Screenshot_2026-02-18_at_10.02.38_AM-removebg-preview.png" width="44" height="42" alt=""/> <a href="Homepage.html">Home Page</a>
+
+            <div class="dropdown">
+                <a href="#">Business Aspects ▾</a>
+                <div class="dropdown-content">
+                    <a href="Financial Literacy.html">Financial Literacy</a>
+                    <a href="Marketing Strategies.html">Marketing Strategies</a>
+                    <a href="Business Planning.html">Business Planning</a>
+                </div>
+            </div>
+
+            <a href="Forum.html" class="active">Forum</a>
+            <a href="Uploads.html">Forum Uploads</a>
+        </div>
+
+        <div class="nav-right-group">
+            <div class="search-box">
+                <form id="searchForm" style="display:flex;align-items:center;">
+                  <input type="text" id="searchInput" placeholder="Search...">
+                  <button type="submit" class="go-btn">Go</button>
+                </form>
+				<div class="nav-right-group"> ... </div>
+            </div>
+</div>
+    <span class="nav-left-group1"><img src="../Downloads/Screenshot_2026-02-18_at_10.02.38_AM-removebg-preview.png" width="44" height="42" alt=""/></span>    </div>
+</nav>
+
+<div class="page-title">Forum</div>
+<div class="page-desc">
+    A forum is a space where users can share ideas, thoughts, and opinions. Your identity stays anonymous.
+</div>
+
+<div class="forum-container">
+
+    <div style="width:80%;">
+        <div class="box-soft-yellow">
+            <label>Forum Title</label>
+            <input type="text" id="forumTitle" placeholder="Enter your title">
+        </div>
+
+        <div class="box-soft-yellow" style="margin-top:20px;">
+            <label>Description</label>
+            <textarea id="forumText" placeholder="Write your thoughts..."></textarea>
+        </div>
+    </div>
+
+    <div class="grey-box"><img src="Screenshot 2026-02-18 at 10.13.00 AM.png" width="400" height="475" alt=""/></div>
+</div>
+
+<div class="bottom-buttons">
+    <button class="btn publish-btn" id="publish-btn" type="button">Publish</button>
+    <a href="Homepage.html"><button class="btn back-btn">Back</button></a>
+</div>
+
+<button id="toTop" onclick="window.scrollTo({top:0, behavior:'smooth'});">Top</button>
+
+<script type="module" defer>
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { 
+        getFirestore, 
+        collection, 
+        addDoc, 
+        serverTimestamp 
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyD-2tQiN2SMMAG3k8jccQwODKvROoXR4Vs",
+        authDomain: "business-17883.firebaseapp.com",
+        projectId: "business-17883",
+        storageBucket: "business-17883.firebasestorage.app",
+        messagingSenderId: "264809038260",
+        appId: "1:264809038260:web:d35a954c423a76a899b2e1",
+        measurementId: "G-93CEWZGEBP"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    /* ---------------- BAD WORD FILTER ---------------- */
+    const bannedWords = [
+      "fuck","fuk","shit","bitch","bitchass","cunt",
+      "asshole","motherfucker","mf","dick","pussy",
+      "retard","r3tard","nigga","nigger","slut","hoe","ass","asshole"
+    ];
+
+    function containsBadWords(text) {
+        const lower = text.toLowerCase();
+        return bannedWords.some(word => lower.includes(word));
+    }
+    /* ------------------------------------------------ */
+
+    document.getElementById("publish-btn").onclick = publishPost;
+
+    async function publishPost() {
+        let title = document.getElementById("forumTitle").value.trim();
+        let text = document.getElementById("forumText").value.trim();
+
+        if (!title || !text) {
+            alert("Please fill in both the title and description.");
+            return;
+        }
+
+        // BAD WORD CHECK
+        if (containsBadWords(title) || containsBadWords(text)) {
+            alert("Your post contains inappropriate words. Please rewrite it.");
+            return;
+        }
+
+        await addDoc(collection(db, "forumPosts"), {
+            title: title,
+            content: text,
+            timestamp: serverTimestamp()
+        });
+
+        alert("Post published!");
+        document.getElementById("forumTitle").value = "";
+        document.getElementById("forumText").value = "";
+    }
+
+    /* SEARCH BAR */
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const searchInput = document.getElementById('searchInput').value.toLowerCase().trim();
+
+        const searchMap = {
+            'forum': 'Forum.html',
+            'upload': 'Uploads.html',
+            'finance': 'Financial Literacy.html',
+            'literacy': 'Financial Literacy.html',
+            'marketing': 'Marketing Strategies.html',
+            'business': 'Business Planning.html',
+            'planning': 'Business Planning.html',
+            'home': 'Homepage.html',
+            'strategies': 'Marketing Strategies.html',
+            'budgeting': 'Financial Literacy.html',
+            'mindset': 'Financial Literacy.html',
+            'managing money': 'Financial Literacy.html',
+            'social media': 'Marketing Strategies.html',
+            'content creation': 'Marketing Strategies.html',
+            'market research': 'Marketing Strategies.html',
+            'costing': 'Business Planning.html',
+            'pricing': 'Business Planning.html',
+            'management': 'Business Planning.html',
+            'title': 'Forum.html',
+            'description': 'Forum.html'
+        };
+
+        if (searchMap[searchInput]) {
+            window.location.href = './' + searchMap[searchInput];
+        } else {
+            alert('Sorry, that page was not found.');
+        }
+    });
+</script>
+
+</body>
+</html>
